@@ -1,1 +1,5 @@
 yandex-client/node_modules
+yandex-server/node_modules
+yandex-server/package-lock.json
+yandex-server/.env
+.vscode
