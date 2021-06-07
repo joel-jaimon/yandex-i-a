@@ -1,12 +1,12 @@
-import cookieParser = require("cookie-parser");
-import "dotenv/config";
-import "reflect-metadata";
-import { RESOLVERS } from "./src/graphql/resolvers";
+require("dotenv/config");
+require("reflect-metadata");
+const cookieParser = require("cookie-parser");
+// const { RESOLVERS } = require("./src/graphql/resolvers");
 const express = require("express");
-import { ApolloServer } from "apollo-server-express";
-import { buildSchema } from "type-graphql";
-import { createConnection } from "typeorm";
-import * as cors from "cors";
+const { ApolloServer } = require("apollo-server-express");
+const { buildSchema } = require("type-graphql");
+const { createConnection } = require("typeorm");
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const jsonBodyParser = bodyParser.json();
 
@@ -27,7 +27,7 @@ app.use(cookieParser());
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: RESOLVERS as any,
+      // resolvers: RESOLVERS,
       //timestamp based ("timestamp") - 1518037458374
       // ISO format ("isoDate") - "2018-02-07T21:04:39.573Z"
       dateScalarMode: "isoDate",
