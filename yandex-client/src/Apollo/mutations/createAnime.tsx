@@ -2,26 +2,26 @@ import { gql } from "@apollo/client";
 
 export const CREATE_ANIME_MUTATION_CLIENT = gql`
   mutation createAnimeInfo(
-    $title: String
-    $type: String
-    $episodes: Number
-    $status: String
-    $start_airing: String
-    $end_airing: String
-    $starting_season: String
-    $broadcast_time: String
-    $producers: String
-    $licensors: String
-    $studios: String
-    $sources: String
-    $genres: String
-    $duration: String
-    $rating: String
-    $score: Number
-    $scored_by: Number
-    $members: Number
-    $favorites: Number
-    $desc: String
+    $title: String!
+    $type: String!
+    $episodes: String!
+    $status: String!
+    $start_airing: String!
+    $end_airing: String!
+    $starting_season: String!
+    $broadcast_time: String!
+    $producers: String!
+    $licensors: String!
+    $studios: String!
+    $sources: String!
+    $genres: String!
+    $duration: String!
+    $rating: String!
+    $score: Float!
+    $scored_by: Float!
+    $members: Float!
+    $favorites: Float!
+    $desc: String!
   ) {
     createAnimeInfo(
       title: $title

@@ -4,8 +4,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { StyleContextProvider } from "./context/StyleContext";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000/graphql",
+  uri: "http://localhost:4000/graphql/",
   cache: new InMemoryCache(),
+  credentials: "include",
 });
 
 render(

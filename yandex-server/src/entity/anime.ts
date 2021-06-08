@@ -27,9 +27,10 @@ export class Animes extends BaseEntity {
 
   @Field()
   @Column({
-    type: "integer",
+    type: "character varying",
+    length: 10,
   })
-  episodes: number;
+  episodes: string;
 
   @Field()
   @Column({

@@ -8,8 +8,8 @@ export class CreateAnimeArgs {
   @Field(() => String)
   type: string;
 
-  @Field(() => Number)
-  episodes: number;
+  @Field(() => String)
+  episodes: string;
 
   @Field(() => String)
   status: string;

@@ -1,13 +1,11 @@
 import React from "react";
-import { StyleContext } from "../context/StyleContext";
+import { StyleContext, themes } from "../context/StyleContext";
 import { Search } from "./Search/Search";
 import { ListItems } from "./ListItems/ListItems";
 import styles from "./layout.module.scss";
 
-console.log(styles);
-
 export const Layout = () => {
-  const { theme } = React.useContext(StyleContext);
+  const { theme, setTheme } = React.useContext(StyleContext);
   return (
     <div
       style={{
@@ -30,12 +28,18 @@ export const Layout = () => {
             <p>&nbsp;Anime Info</p>
           </strong>
         </div>
-        <div className={styles.df_jc_ac}>
+        <div
+          style={{
+            width: "100px",
+          }}
+          className={styles.df_jc_ac}
+        >
           {theme.type === "Dark" ? (
             <svg
+              onClick={() => setTheme(themes.white)}
               width="25"
               height="30"
-              fill={theme.theme2}
+              // fill={theme.theme2}
               className="bi bi-toggle2-off"
               viewBox="0 0 16 16"
             >
@@ -44,10 +48,11 @@ export const Layout = () => {
             </svg>
           ) : (
             <svg
+              onClick={() => setTheme(themes.dark)}
               xmlns="http://www.w3.org/2000/svg"
               width="25"
               height="30"
-              fill={theme.theme2}
+              // fill={theme.theme2}
               className="bi bi-toggle2-on"
               viewBox="0 0 16 16"
             >

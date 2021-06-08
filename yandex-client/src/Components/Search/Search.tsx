@@ -1,14 +1,17 @@
 import styles from "./search.module.scss";
 import React from "react";
 import { StyleContext } from "../../context/StyleContext";
+import INPUT_DATA from "../../data.json";
+
+console.log(INPUT_DATA);
 
 export const Search = () => {
   const { theme } = React.useContext(StyleContext);
   return (
     <div className={styles.SubSearchContainer}>
       <svg
-        width="20"
-        height="20"
+        width="18"
+        height="18"
         fill={theme.theme2}
         className={styles.svg}
         viewBox="0 0 16 16"
