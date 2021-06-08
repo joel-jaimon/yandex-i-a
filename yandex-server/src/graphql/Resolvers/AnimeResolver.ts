@@ -45,13 +45,13 @@ export class AnimeResolver {
     const response = await Animes.find({
       where: [
         {
-          genres: ILike(`%${search_query} #%`),
+          genres: ILike(`%${search_query}%`),
         },
         {
-          title: ILike(`%${search_query} #%`),
+          title: ILike(`%${search_query}%`),
         },
         {
-          type: ILike(`%${search_query} #%`),
+          type: ILike(`%${search_query}%`),
         },
       ],
       skip: skip,
