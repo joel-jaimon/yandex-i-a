@@ -3,9 +3,39 @@ import { StyleContext, themes } from "../context/StyleContext";
 import { Search } from "./Search/Search";
 import { ListItems } from "./ListItems/ListItems";
 import styles from "./layout.module.scss";
+import { gql, useLazyQuery } from "@apollo/client";
 
 export const Layout = () => {
   const { theme, setTheme } = React.useContext(StyleContext);
+  const [searchQuery, setSearchQuery] = React.useState<null | string>();
+  const [pagenationParams, setPagenationParams] = React.useState({
+    skip: 0,
+    take: 30,
+  });
+  const [loadResults, searchResults] = useLazyQuery(FETCH_SEARCH_RESULTS);
+
+  const handleInputs = async (query: string) => {
+    if (!query) {
+      console.log("Please type an input to search.");
+      return;
+    }
+
+    if (!/[A-Za-z]/.test(query)) {
+      console.log("Please enter a valid input!.");
+      return;
+    }
+    setSearchQuery(query);
+    if (query.length > 2) {
+      await loadResults({
+        variables: {
+          search_query: query,
+          skip: pagenationParams.skip,
+          take: pagenationParams.take,
+        },
+      });
+    }
+  };
+
   return (
     <div
       style={{
@@ -70,11 +100,34 @@ export const Layout = () => {
             boxShadow: `0px 0px 15px ${theme.theme3}`,
           }}
         >
-          <Search />
-          <ListItems />
+          <Search setSearchQuery={handleInputs} />
+          <ListItems
+            searchedQuery={searchQuery}
+            searchResults={searchResults}
+            setPagenationParams={setPagenationParams}
+          />
         </div>
       </div>
       <footer></footer>
     </div>
   );
 };
+
+const FETCH_SEARCH_RESULTS = gql`
+  query FetchAnime($search_query: String!, $take: Float!, $skip: Float!) {
+    searchAnime(search_query: $search_query, take: $take, skip: $skip) {
+      id
+      title
+      type
+      episodes
+      status
+      start_airing
+      sources
+      genres
+      duration
+      rating
+      score
+      favorites
+    }
+  }
+`;
