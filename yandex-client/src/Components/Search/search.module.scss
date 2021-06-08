@@ -1,0 +1,21 @@
+.SubSearchContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  width: calc(100% - 20px);
+  padding: 13px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 20px;
+  &::placeholder {
+    color: rgb(200, 200, 200);
+  }
+}
+
+.svg {
+  margin: 0px 0px 0px 13px;
+}

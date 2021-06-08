@@ -1,0 +1,21 @@
+.resultContainer {
+  width: 100%;
+  border-top: 1px solid rgb(220, 220, 220);
+}
+
+.listItems {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  p {
+    margin: 0px;
+  }
+  span {
+    background-color: dodgerblue;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: small;
+    color: white;
+    margin-right: 5px;
+  }
+}

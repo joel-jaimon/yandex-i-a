@@ -2,16 +2,18 @@ import React from "react";
 
 const themes = {
   dark: {
-    type: "dark",
-    theme1: "",
-    theme2: "",
-    theme3: "",
+    type: "Dark",
+    theme1: "#0C0D14",
+    theme2: "#4d4f59",
+    theme3: "#BEC1CE",
+    theme4: "#CFD1DD",
   },
   white: {
-    type: "white",
-    theme1: "",
-    theme2: "",
-    theme3: "",
+    type: "White",
+    theme1: "#0C0D14",
+    theme2: "#4d4f59",
+    theme3: "#BEC1CE",
+    theme4: "#CFD1DD",
   },
 };
 
@@ -20,6 +22,7 @@ interface THEME {
   theme1: string;
   theme2: string;
   theme3: string;
+  theme4: string;
 }
 
 interface STYLE_TYPE {

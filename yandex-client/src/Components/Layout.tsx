@@ -1,29 +1,40 @@
 import React from "react";
 import { StyleContext } from "../context/StyleContext";
 import { Search } from "./Search/Search";
+import { ListItems } from "./ListItems/ListItems";
+import styles from "./layout.module.scss";
+
+console.log(styles);
 
 export const Layout = () => {
   const { theme } = React.useContext(StyleContext);
   return (
-    <div>
-      <header>
-        <div>
+    <div
+      style={{
+        backgroundColor: theme.theme4,
+      }}
+      className={styles.layout}
+    >
+      <header className={styles.header}>
+        <div className={styles.df_jc_ac}>
           <svg
-            width="16"
-            height="16"
+            width="25"
+            height="30"
             fill={theme.theme2}
             className="bi bi-tv-fill"
             viewBox="0 0 16 16"
           >
             <path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM2 2h12s2 0 2 2v6s0 2-2 2H2s-2 0-2-2V4s0-2 2-2z" />
           </svg>
-          <p>Anime Info</p>
+          <strong>
+            <p>&nbsp;Anime Info</p>
+          </strong>
         </div>
-        <div>
-          {theme.type === "dark" ? (
+        <div className={styles.df_jc_ac}>
+          {theme.type === "Dark" ? (
             <svg
-              width="16"
-              height="16"
+              width="25"
+              height="30"
               fill={theme.theme2}
               className="bi bi-toggle2-off"
               viewBox="0 0 16 16"
@@ -34,8 +45,8 @@ export const Layout = () => {
           ) : (
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              width="25"
+              height="30"
               fill={theme.theme2}
               className="bi bi-toggle2-on"
               viewBox="0 0 16 16"
@@ -44,10 +55,21 @@ export const Layout = () => {
               <path d="M16 8A5 5 0 1 1 6 8a5 5 0 0 1 10 0z" />
             </svg>
           )}
-          <p>{theme.type}</p>
+          <p>&nbsp;{theme.type}</p>
         </div>
       </header>
-      <Search />
+      <div className={`${styles.main} ${styles.df_jc_ac}`}>
+        <div
+          className={styles.searchContainer}
+          style={{
+            boxShadow: `0px 0px 15px ${theme.theme3}`,
+          }}
+        >
+          <Search />
+          <ListItems />
+        </div>
+      </div>
+      <footer></footer>
     </div>
   );
 };
