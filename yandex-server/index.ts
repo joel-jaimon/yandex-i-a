@@ -1,3 +1,5 @@
+import { RESOLVERS } from "./src/graphql/resolvers";
+
 require("dotenv/config");
 require("reflect-metadata");
 const cookieParser = require("cookie-parser");
@@ -27,7 +29,7 @@ app.use(cookieParser());
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      // resolvers: RESOLVERS,
+      resolvers: RESOLVERS,
       //timestamp based ("timestamp") - 1518037458374
       // ISO format ("isoDate") - "2018-02-07T21:04:39.573Z"
       dateScalarMode: "isoDate",

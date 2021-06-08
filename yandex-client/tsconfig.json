@@ -1,12 +1,24 @@
 {
   "compilerOptions": {
-    "lib": ["es5", "es6", "es7"],
+    "lib": ["es5", "es6", "es7", "DOM"],
     "target": "ES2020",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "outDir": "./build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": ["src"]
 }
