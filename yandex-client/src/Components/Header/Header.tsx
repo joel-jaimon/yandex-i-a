@@ -12,7 +12,7 @@ const Header = () => {
         <svg
           width="25"
           height="30"
-          fill={theme.theme2}
+          fill={theme.type === "Dark" ? theme.theme2 : "white"}
           className="bi bi-tv-fill"
           viewBox="0 0 16 16"
         >
@@ -20,10 +20,10 @@ const Header = () => {
         </svg>
         <strong
           style={{
-            color: theme.theme1,
+            color: "white",
           }}
         >
-          <p>&nbsp;&nbsp;Anime Info</p>
+          <p>&nbsp;&nbsp;ANIME INFO</p>
         </strong>
       </div>
       <div
@@ -42,7 +42,8 @@ const Header = () => {
         />
         <p
           style={{
-            color: theme.theme1,
+            color: "white",
+            fontWeight: 500,
           }}
         >
           &nbsp;{theme.type}

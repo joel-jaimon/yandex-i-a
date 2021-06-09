@@ -14,6 +14,7 @@ import {
   LIST_ITEM_TYPE,
   PAGENATION_PARAM_TYPE,
 } from "../types/customInterfaces";
+import { Footer } from "./Footer/Footer";
 import whiteBk from "../Assets/white-back.jpg";
 import blackBk from "../Assets/dark-back.jpg";
 
@@ -141,6 +142,7 @@ export const Layout = () => {
           />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
