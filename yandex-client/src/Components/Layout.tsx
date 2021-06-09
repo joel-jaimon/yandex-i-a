@@ -1,18 +1,36 @@
 import React from "react";
 import { StyleContext, themes } from "../context/StyleContext";
 import { Search } from "./Search/Search";
-import { ListItems } from "./ListItems/ListItems";
+import { ITEM_TYPE, ListItems } from "./ListItems/ListItems";
 import styles from "./layout.module.scss";
 import { gql, useLazyQuery } from "@apollo/client";
+import Switch from "@material-ui/core/Switch";
+
+export interface PAGENATION_PARAM_TYPE {
+  skip: number;
+  take: number;
+}
+
+const initialPagenationParam = {
+  skip: 0,
+  take: 10,
+};
 
 export const Layout = () => {
   const { theme, setTheme } = React.useContext(StyleContext);
   const [searchQuery, setSearchQuery] = React.useState<null | string>();
-  const [pagenationParams, setPagenationParams] = React.useState({
-    skip: 0,
-    take: 30,
+  const [isLoadingMore, setIsLoadingMore] = React.useState(false);
+  const [pagenationParams, setPagenationParams] =
+    React.useState<PAGENATION_PARAM_TYPE>(initialPagenationParam);
+  const [loadResults, searchResults] = useLazyQuery(FETCH_SEARCH_RESULTS, {
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: "network-only",
   });
-  const [loadResults, searchResults] = useLazyQuery(FETCH_SEARCH_RESULTS);
+  const [getQueryCount, totalQueryCount] = useLazyQuery(FTECH_SEARCH_COUNTS, {
+    notifyOnNetworkStatusChange: true,
+  });
+
+  const [hasMore, setHasMore] = React.useState(false);
 
   const handleInputs = async (query: string) => {
     if (!query) {
@@ -25,16 +43,72 @@ export const Layout = () => {
       return;
     }
     setSearchQuery(query);
-    if (query.length > 2) {
-      await loadResults({
+    setPagenationParams(initialPagenationParam);
+    if (query.length > 1) {
+      await getQueryCount({
         variables: {
           search_query: query,
-          skip: pagenationParams.skip,
-          take: pagenationParams.take,
         },
       });
+
+      if (searchResults.data && searchResults.refetch) {
+        console.log("REFETCH");
+        await searchResults.refetch({
+          variables: {
+            search_query: query,
+            skip: pagenationParams.skip,
+            take: pagenationParams.take,
+          },
+        });
+      } else {
+        await loadResults({
+          variables: {
+            search_query: query,
+            skip: pagenationParams.skip,
+            take: pagenationParams.take,
+          },
+        });
+      }
+      return;
     }
   };
+
+  console.log(searchResults.data);
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        if (pagenationParams.skip === 0) {
+        } else {
+          //@ts-ignore
+          const _fetch = await searchResults.fetchMore({
+            variables: {
+              skip: pagenationParams.skip,
+              take: pagenationParams.take,
+            },
+          });
+          return _fetch;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, [pagenationParams]);
+
+  React.useEffect(() => {
+    (async () => {
+      const { called, loading, data } = await searchResults;
+      const items: ITEM_TYPE[] = await data?.searchAnime;
+
+      if (items && totalQueryCount?.data) {
+        if (items.length >= totalQueryCount.data.countAnimes) {
+          setHasMore(false);
+        } else {
+          setHasMore(true);
+        }
+      }
+    })();
+  }, [searchResults.data, totalQueryCount.data]);
 
   return (
     <div
@@ -64,32 +138,14 @@ export const Layout = () => {
           }}
           className={styles.df_jc_ac}
         >
-          {theme.type === "Dark" ? (
-            <svg
-              onClick={() => setTheme(themes.white)}
-              width="25"
-              height="30"
-              // fill={theme.theme2}
-              className="bi bi-toggle2-off"
-              viewBox="0 0 16 16"
-            >
-              <path d="M9 11c.628-.836 1-1.874 1-3a4.978 4.978 0 0 0-1-3h4a3 3 0 1 1 0 6H9z" />
-              <path d="M5 12a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0 1A5 5 0 1 0 5 3a5 5 0 0 0 0 10z" />
-            </svg>
-          ) : (
-            <svg
-              onClick={() => setTheme(themes.dark)}
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="30"
-              // fill={theme.theme2}
-              className="bi bi-toggle2-on"
-              viewBox="0 0 16 16"
-            >
-              <path d="M7 5H3a3 3 0 0 0 0 6h4a4.995 4.995 0 0 1-.584-1H3a2 2 0 1 1 0-4h3.416c.156-.357.352-.692.584-1z" />
-              <path d="M16 8A5 5 0 1 1 6 8a5 5 0 0 1 10 0z" />
-            </svg>
-          )}
+          <Switch
+            checked={theme.type === "Dark"}
+            onClick={() =>
+              setTheme(theme.type === "Dark" ? themes.white : themes.dark)
+            }
+            color="primary"
+            value="dynamic-class-name"
+          />
           <p>&nbsp;{theme.type}</p>
         </div>
       </header>
@@ -102,8 +158,11 @@ export const Layout = () => {
         >
           <Search setSearchQuery={handleInputs} />
           <ListItems
+            hasMore={hasMore}
             searchedQuery={searchQuery}
             searchResults={searchResults}
+            pagenationParams={pagenationParams}
+            isLoadingMore={isLoadingMore}
             setPagenationParams={setPagenationParams}
           />
         </div>
@@ -112,6 +171,12 @@ export const Layout = () => {
     </div>
   );
 };
+
+const FTECH_SEARCH_COUNTS = gql`
+  query FetchCount($search_query: String!) {
+    countAnimes(search_query: $search_query)
+  }
+`;
 
 const FETCH_SEARCH_RESULTS = gql`
   query FetchAnime($search_query: String!, $take: Float!, $skip: Float!) {

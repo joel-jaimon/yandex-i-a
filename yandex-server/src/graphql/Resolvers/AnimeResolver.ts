@@ -1,4 +1,12 @@
-import { Arg, Args, Mutation, Query, Resolver } from "type-graphql";
+import {
+  Arg,
+  Args,
+  InputType,
+  Mutation,
+  ObjectType,
+  Query,
+  Resolver,
+} from "type-graphql";
 import { ILike } from "typeorm";
 import { Animes } from "../../entity/anime";
 import { CreateAnimeArgs } from "../ArgsType/AnimeArgs";
@@ -36,16 +44,35 @@ export class AnimeResolver {
     return response;
   }
 
+  @Query(() => Number)
+  async countAnimes(@Arg("search_query") search_query: string): Promise<any> {
+    return await Animes.count({
+      where: [
+        {
+          genres: ILike(`%${search_query} %`),
+        },
+        {
+          title: ILike(`%${search_query}%`),
+        },
+        {
+          type: ILike(`%${search_query}%`),
+        },
+      ],
+    }).catch((e) => {
+      throw new Error(e);
+    });
+  }
+
   @Query(() => [Animes])
   async searchAnime(
     @Arg("search_query") search_query: string,
     @Arg("skip") skip: number,
     @Arg("take") take: number
-  ): Promise<Animes[]> {
+  ): Promise<any> {
     const response = await Animes.find({
       where: [
         {
-          genres: ILike(`%${search_query}%`),
+          genres: ILike(`%${search_query} %`),
         },
         {
           title: ILike(`%${search_query}%`),
@@ -59,11 +86,9 @@ export class AnimeResolver {
       order: {
         id: "ASC",
       },
-      cache: true,
     }).catch((e) => {
       throw new Error(e);
     });
-
     return response;
   }
 

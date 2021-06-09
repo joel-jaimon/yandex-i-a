@@ -1,8 +1,10 @@
 import styles from "./listitem.module.scss";
 import React from "react";
 import { StyleContext } from "../../context/StyleContext";
+import { LinearProgress } from "@material-ui/core";
+import { PAGENATION_PARAM_TYPE } from "../Layout";
 
-interface ITEM_TYPE {
+export interface ITEM_TYPE {
   id: number;
   title: string;
   type: string;
@@ -17,10 +19,17 @@ interface ITEM_TYPE {
   favorites: number;
 }
 
-export const ListItems = ({ searchResults, searchedQuery }: any) => {
+export const ListItems = ({
+  hasMore,
+  searchResults,
+  searchedQuery,
+  pagenationParams,
+  setPagenationParams,
+  isLoadingMore,
+}: any) => {
   const { theme } = React.useContext(StyleContext);
-  const { called, loading, data } = searchResults;
-  const items: ITEM_TYPE[] = data?.searchAnime;
+  const { called, loading, data, fetchMore } = searchResults;
+  const items: any[] = [...new Set(data?.searchAnime)];
 
   const observer = React.useRef();
   //@ts-ignore
@@ -31,66 +40,83 @@ export const ListItems = ({ searchResults, searchedQuery }: any) => {
       if (observer.current) observer.current.disconnect();
       //@ts-ignore
       observer.current = new IntersectionObserver((items) => {
-        //@ts-ignore
-        if (items[0].isIntersecting) {
-          console.log("Visible");
+        if (items[0].isIntersecting && hasMore) {
+          setPagenationParams((pagenationParams: PAGENATION_PARAM_TYPE) => {
+            return {
+              skip: pagenationParams.skip + 10,
+              take: pagenationParams.take,
+            };
+          });
         }
       });
       //@ts-ignore
       if (node) observer.current.observe(node);
     },
-    [loading]
+    [loading, hasMore]
   );
+  console.log(hasMore);
 
   return (
-    <div className={styles.resultContainer}>
-      {items && searchedQuery?.length > 2
-        ? items.map((res: ITEM_TYPE, index: number) => {
-            return (
-              <div
-                ref={items.length === index + 1 ? lastItemCallback : null}
-                key={res.id}
-                className={styles.listItems}
-              >
-                <div>
-                  <strong>
-                    <p>
-                      {res.title.slice(0, 50)}
-                      {res.title[50] ? "..." : ""}
-                    </p>
-                  </strong>
-                  <div className={styles.listSubInfo}>
-                    <small
-                      style={{
-                        backgroundColor: theme.theme4,
-                      }}
-                    >
-                      {res.duration.split(".")[0]}
-                    </small>
-                    <small
-                      style={{
-                        backgroundColor: theme.theme4,
-                      }}
-                    >
-                      {res.start_airing}
+    <React.Fragment>
+      <div className={styles.resultContainer}>
+        {items && searchedQuery?.length > 1
+          ? items.map((res: ITEM_TYPE, index: number) => {
+              return (
+                <div
+                  ref={items.length === index + 1 ? lastItemCallback : null}
+                  key={res.id}
+                  className={styles.listItems}
+                >
+                  <div>
+                    <strong>
+                      <p>
+                        {res.title.slice(0, 50)}
+                        {res.title[50] ? "..." : ""}
+                      </p>
+                    </strong>
+                    <div className={styles.listSubInfo}>
+                      <small
+                        style={{
+                          backgroundColor: theme.theme4,
+                        }}
+                      >
+                        {res.duration.split(".")[0]}
+                      </small>
+                      <small
+                        style={{
+                          backgroundColor: theme.theme4,
+                        }}
+                      >
+                        {res.start_airing}
+                      </small>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      backgroundColor: theme.theme2,
+                      color: theme.theme4,
+                    }}
+                    className={styles.bullets}
+                  >
+                    <small>
+                      {res.status === "Finished Airing"
+                        ? "Completed"
+                        : "Ongoing"}
                     </small>
                   </div>
                 </div>
-                <div
-                  style={{
-                    backgroundColor: theme.theme2,
-                    color: theme.theme4,
-                  }}
-                  className={styles.bullets}
-                >
-                  <small>
-                    {res.status === "Finished Airing" ? "Completed" : "Ongoing"}
-                  </small>
-                </div>
-              </div>
-            );
-          })
-        : null}
-    </div>
+              );
+            })
+          : null}
+      </div>
+      {loading || isLoadingMore ? (
+        <LinearProgress
+          color="primary"
+          style={{
+            width: "100%",
+          }}
+        />
+      ) : null}
+    </React.Fragment>
   );
 };
