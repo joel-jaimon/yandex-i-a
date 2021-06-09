@@ -114,7 +114,7 @@ export const Layout = () => {
     <div
       style={{
         background: `linear-gradient(180deg,rgba(0,0,0,0.3), ${
-          theme.type === "White" ? "transparent" : "rgba(0,0,0,0.8)"
+          theme.type === "White" ? "transparent" : "rgba(0,0,0,0.6)"
         }),url(${
           theme.type === "White" ? white_background : black_background
         })`,
