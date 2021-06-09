@@ -129,7 +129,8 @@ export const ListItems = ({
                   >
                     <small
                       style={{
-                        color: theme.theme1,
+                        color:
+                          theme.type === "White" ? theme.theme3 : theme.theme1,
                       }}
                     >
                       {res.status === "Finished Airing"
