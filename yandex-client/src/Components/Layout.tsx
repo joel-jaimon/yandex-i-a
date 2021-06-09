@@ -68,6 +68,7 @@ export const Layout = () => {
       const { fetchMore } = await searchResults;
       try {
         if (pagenationParams.skip === 0) {
+          console.log("");
         } else {
           //@ts-ignore
           const _fetch = await fetchMore({
@@ -82,11 +83,12 @@ export const Layout = () => {
         console.log(e);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagenationParams]);
 
   React.useEffect(() => {
     (async () => {
-      const { called, loading, data } = await searchResults;
+      const { data } = await searchResults;
       const items: ITEM_TYPE[] = await data?.searchAnime;
 
       if (items && totalQueryCount?.data) {
@@ -97,6 +99,7 @@ export const Layout = () => {
         }
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResults.data, totalQueryCount.data]);
 
   return (

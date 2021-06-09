@@ -1,0 +1,64 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    // "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    // NextJs specific fix: suppress errors for missing 'import React' in files for nextjs
+    "react/react-in-jsx-scope": "off",
+    // NextJs specific fix: allow jsx syntax in js files
+    "react/jsx-filename-extension": [
+      0,
+      {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ], //should add ".ts" if typescript project
+    "react/display-name": 1,
+    //  "indent": ["error", 4], //or ["error", "tab"]
+    "linebreak-style": 0, //["error", "unix"],
+    "no-underscore-dangle": 0,
+    "no-cond-assign": ["error", "always"],
+    "no-console": "off", // ["error", { allow: ["warn", "error"] }]
+    "no-alert": "error",
+    "no-unused-vars": "off",
+    "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "max-len": [
+      2,
+      1000,
+      {
+        "ignoreTrailingComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ]
+  }
+}
