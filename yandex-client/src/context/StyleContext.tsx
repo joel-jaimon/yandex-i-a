@@ -3,10 +3,10 @@ import React from "react";
 export const themes = {
   dark: {
     type: "Dark",
-    theme1: "#0C0D14",
-    theme2: "#4d4f59",
-    theme3: "#BEC1CE",
-    theme4: "#CFD1DD",
+    theme1: "white",
+    theme2: "rgb(200,200,200)",
+    theme3: "gray",
+    theme4: "rgb(21,21,21)",
   },
   white: {
     type: "White",
