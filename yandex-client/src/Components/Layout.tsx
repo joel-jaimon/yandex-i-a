@@ -20,9 +20,9 @@ const initialPagenationParam = {
 export const Layout = () => {
   const { theme, setTheme } = React.useContext(StyleContext);
   const [searchQuery, setSearchQuery] = React.useState<null | string>();
-  const [isLoadingMore, setIsLoadingMore] = React.useState(false);
   const [pagenationParams, setPagenationParams] =
     React.useState<PAGENATION_PARAM_TYPE>(initialPagenationParam);
+
   const [loadResults, searchResults] = useLazyQuery(FETCH_SEARCH_RESULTS, {
     notifyOnNetworkStatusChange: true,
     fetchPolicy: "cache-and-network",
@@ -45,8 +45,8 @@ export const Layout = () => {
       return;
     }
 
-    await setSearchQuery(query);
-    await setPagenationParams(initialPagenationParam);
+    setSearchQuery(query);
+    setPagenationParams(initialPagenationParam);
     if (query.length > 1) {
       await getQueryCount({
         variables: {
@@ -150,7 +150,6 @@ export const Layout = () => {
             hasMore={hasMore}
             searchedQuery={searchQuery}
             searchResults={searchResults}
-            isLoadingMore={isLoadingMore}
             setPagenationParams={setPagenationParams}
           />
         </div>
