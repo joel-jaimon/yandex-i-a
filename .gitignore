@@ -4,4 +4,3 @@ yandex-server/package-lock.json
 yandex-server/.env
 .vscode
 yandex-client/package-lock.json
-yandex-client/src/data.json
