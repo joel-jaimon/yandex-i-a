@@ -7,8 +7,8 @@ export function Search({ setSearchQuery }: any) {
   return (
     <div className={styles.SubSearchContainer}>
       <svg
-        width="18"
-        height="18"
+        width="20"
+        height="20"
         fill={theme.theme2}
         className={styles.svg}
         viewBox="0 0 16 16"

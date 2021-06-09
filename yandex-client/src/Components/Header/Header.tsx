@@ -23,7 +23,7 @@ const Header = () => {
             color: theme.theme1,
           }}
         >
-          <p>&nbsp;Anime Info</p>
+          <p>&nbsp;&nbsp;Anime Info</p>
         </strong>
       </div>
       <div

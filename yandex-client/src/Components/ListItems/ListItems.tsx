@@ -131,6 +131,7 @@ export const ListItems = ({
           color="primary"
           style={{
             width: "100%",
+            height: "2px",
           }}
         />
       ) : null}

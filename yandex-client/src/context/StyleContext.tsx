@@ -40,6 +40,24 @@ export const StyleContext = React.createContext<STYLE_TYPE>({
 
 export const StyleContextProvider = ({ children }: any) => {
   const [theme, setTheme] = React.useState<THEME>(themes.white);
+
+  React.useEffect(() => {
+    const persistedTheme = localStorage.getItem("_theme");
+    if (persistedTheme) {
+      try {
+        setTheme(JSON.parse(persistedTheme));
+      } catch {
+        console.log("");
+      } finally {
+        console.log("");
+      }
+    }
+  }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("_theme", JSON.stringify(theme));
+  }, [theme]);
+
   return (
     <StyleContext.Provider
       value={{

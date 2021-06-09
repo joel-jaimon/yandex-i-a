@@ -18,7 +18,7 @@ const initialPagenationParam = {
 };
 
 export const Layout = () => {
-  const { theme, setTheme } = React.useContext(StyleContext);
+  const { theme } = React.useContext(StyleContext);
   const [searchQuery, setSearchQuery] = React.useState<null | string>();
   const [pagenationParams, setPagenationParams] =
     React.useState<PAGENATION_PARAM_TYPE>(initialPagenationParam);
@@ -39,7 +39,7 @@ export const Layout = () => {
       return;
     }
 
-    if (!/[A-Za-z]/.test(query)) {
+    if (!/^[a-zA-Z ]*$/.test(query)) {
       console.log("Please enter a valid input!.");
       return;
     }
