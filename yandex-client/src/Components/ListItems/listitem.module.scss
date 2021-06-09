@@ -38,10 +38,14 @@
 }
 
 .listSubInfo {
+  display: flex;
   small {
     margin-right: 5px;
     padding: 2px;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -54,4 +58,9 @@
   align-items: center;
   text-align: center;
   height: 20px;
+  small {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

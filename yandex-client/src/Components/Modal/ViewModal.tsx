@@ -1,14 +1,18 @@
 import React from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import styles from "./viewmodal.module.scss";
 import { StyleContext } from "../../context/StyleContext";
 import CloseIcon from "@material-ui/icons/Close";
 import { IconButton } from "@material-ui/core";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
+import { MODAL_DATA_TYPE } from "../../Apollo/queries/queries";
+
 export const ViewModal = ({ open, setOpen, id, setViewId }: any) => {
   const { theme } = React.useContext(StyleContext);
-  const { loading, data } = useQuery(DATA_TYPE, {
+  const { loading, data } = useQuery(MODAL_DATA_TYPE, {
     variables: {
       id,
     },
@@ -64,6 +68,8 @@ export const ViewModal = ({ open, setOpen, id, setViewId }: any) => {
                     backgroundColor: theme.theme5,
                   }}
                 >
+                  <StarBorderIcon fontSize="inherit" />
+                  &nbsp;
                   {modalData?.score}
                 </small>
                 <small
@@ -71,6 +77,8 @@ export const ViewModal = ({ open, setOpen, id, setViewId }: any) => {
                     backgroundColor: theme.theme5,
                   }}
                 >
+                  <DateRangeIcon fontSize="inherit" />
+                  &nbsp;
                   {modalData?.start_airing.split("/")[2]}
                 </small>
                 <small
@@ -85,6 +93,8 @@ export const ViewModal = ({ open, setOpen, id, setViewId }: any) => {
                     backgroundColor: theme.theme5,
                   }}
                 >
+                  <ThumbUpIcon fontSize="inherit" />
+                  &nbsp;
                   {modalData?.favorites}
                 </small>
               </div>
@@ -247,31 +257,3 @@ export const ViewModal = ({ open, setOpen, id, setViewId }: any) => {
     </div>
   );
 };
-
-const DATA_TYPE = gql`
-  query FetchAnime($id: Float!) {
-    anime(id: $id) {
-      id
-      title
-      type
-      episodes
-      status
-      start_airing
-      end_airing
-      starting_season
-      broadcast_time
-      producers
-      licensors
-      studios
-      sources
-      genres
-      duration
-      rating
-      score
-      scored_by
-      members
-      favorites
-      desc
-    }
-  }
-`;

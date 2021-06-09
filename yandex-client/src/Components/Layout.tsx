@@ -1,16 +1,19 @@
 import React from "react";
-import { StyleContext, themes } from "../context/StyleContext";
+import { StyleContext } from "../context/StyleContext";
 import { Search } from "./Search/Search";
-import { ITEM_TYPE, ListItems } from "./ListItems/ListItems";
+import { ListItems } from "./ListItems/ListItems";
 import styles from "./layout.module.scss";
-import { gql, useLazyQuery } from "@apollo/client";
+import { useLazyQuery } from "@apollo/client";
 import { debounce } from "./Debounce";
 import Header from "./Header/Header";
-
-export interface PAGENATION_PARAM_TYPE {
-  skip: number;
-  take: number;
-}
+import {
+  FETCH_SEARCH_RESULTS,
+  FTECH_SEARCH_COUNTS,
+} from "../Apollo/queries/queries";
+import {
+  LIST_ITEM_TYPE,
+  PAGENATION_PARAM_TYPE,
+} from "../types/customInterfaces";
 
 const initialPagenationParam = {
   skip: 0,
@@ -89,7 +92,7 @@ export const Layout = () => {
   React.useEffect(() => {
     (async () => {
       const { data } = await searchResults;
-      const items: ITEM_TYPE[] = await data?.searchAnime;
+      const items: LIST_ITEM_TYPE[] = await data?.searchAnime;
 
       if (items && totalQueryCount?.data) {
         if (items.length >= totalQueryCount.data.countAnimes) {
@@ -130,23 +133,3 @@ export const Layout = () => {
     </div>
   );
 };
-
-const FTECH_SEARCH_COUNTS = gql`
-  query FetchCount($search_query: String!) {
-    countAnimes(search_query: $search_query)
-  }
-`;
-
-const FETCH_SEARCH_RESULTS = gql`
-  query FetchAnime($search_query: String!, $take: Float!, $skip: Float!) {
-    searchAnime(search_query: $search_query, take: $take, skip: $skip) {
-      id
-      title
-      type
-      status
-      start_airing
-      genres
-      duration
-    }
-  }
-`;

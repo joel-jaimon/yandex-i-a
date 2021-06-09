@@ -1,4 +1,5 @@
 import React from "react";
+import { STYLE_CONTEXT_TYPE, THEME_TYPE } from "../types/customInterfaces";
 
 export const themes = {
   dark: {
@@ -19,27 +20,13 @@ export const themes = {
   },
 };
 
-interface THEME {
-  type: string;
-  theme1: string;
-  theme2: string;
-  theme3: string;
-  theme4: string;
-  theme5: string;
-}
-
-interface STYLE_TYPE {
-  theme: THEME;
-  setTheme: React.Dispatch<React.SetStateAction<any>>;
-}
-
-export const StyleContext = React.createContext<STYLE_TYPE>({
+export const StyleContext = React.createContext<STYLE_CONTEXT_TYPE>({
   theme: themes.white,
   setTheme: (x: string) => {},
 });
 
 export const StyleContextProvider = ({ children }: any) => {
-  const [theme, setTheme] = React.useState<THEME>(themes.white);
+  const [theme, setTheme] = React.useState<THEME_TYPE>(themes.white);
 
   React.useEffect(() => {
     const persistedTheme = localStorage.getItem("_theme");

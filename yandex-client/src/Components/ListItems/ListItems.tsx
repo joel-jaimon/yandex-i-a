@@ -2,18 +2,15 @@ import styles from "./listitem.module.scss";
 import React from "react";
 import { StyleContext } from "../../context/StyleContext";
 import { LinearProgress } from "@material-ui/core";
-import { PAGENATION_PARAM_TYPE } from "../Layout";
 import { ViewModal } from "../Modal/ViewModal";
-
-export interface ITEM_TYPE {
-  id: number;
-  title: string;
-  type: string;
-  status: string;
-  start_airing: string;
-  genres: string;
-  duration: string;
-}
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
+import DoneIcon from "@material-ui/icons/Done";
+import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
+import {
+  LIST_ITEM_TYPE,
+  PAGENATION_PARAM_TYPE,
+} from "../../types/customInterfaces";
 
 export const ListItems = ({
   hasMore,
@@ -28,7 +25,7 @@ export const ListItems = ({
 
   const items: any[] = [
     ...new Set(
-      data?.searchAnime?.filter((item: ITEM_TYPE) => {
+      data?.searchAnime?.filter((item: LIST_ITEM_TYPE) => {
         return (
           item.genres.toLowerCase().includes(searchedQuery) ||
           item.type.toLowerCase().includes(searchedQuery) ||
@@ -75,7 +72,7 @@ export const ListItems = ({
           />
         ) : null}
         {items && searchedQuery?.length > 1
-          ? items.map((res: ITEM_TYPE, index: number) => {
+          ? items.map((res: LIST_ITEM_TYPE, index: number) => {
               return (
                 <div
                   onClick={() => {
@@ -108,7 +105,8 @@ export const ListItems = ({
                           color: theme.theme1,
                         }}
                       >
-                        {res.duration.split(".")[0]}
+                        <AccessTimeIcon fontSize="inherit" />
+                        &nbsp;{res.duration.split(".")[0]}
                       </small>
                       <small
                         style={{
@@ -116,7 +114,8 @@ export const ListItems = ({
                           color: theme.theme1,
                         }}
                       >
-                        {res.start_airing}
+                        <CalendarTodayIcon fontSize="inherit" />
+                        &nbsp;{res.start_airing}
                       </small>
                     </div>
                   </div>
@@ -133,9 +132,17 @@ export const ListItems = ({
                           theme.type === "White" ? theme.theme3 : theme.theme1,
                       }}
                     >
-                      {res.status === "Finished Airing"
-                        ? "Completed"
-                        : "Ongoing"}
+                      {res.status === "Finished Airing" ? (
+                        <>
+                          <DoneIcon fontSize="inherit" />
+                          &nbsp;{"Completed"}
+                        </>
+                      ) : (
+                        <>
+                          <HourglassEmptyIcon fontSize="inherit" />
+                          &nbsp;{"Ongoing"}
+                        </>
+                      )}
                     </small>
                   </div>
                 </div>
