@@ -19,12 +19,10 @@ const initialPagenationParam = {
 export const Layout = () => {
   const { theme, setTheme } = React.useContext(StyleContext);
   const [searchQuery, setSearchQuery] = React.useState<null | string>();
-  const [isLoadingMore, setIsLoadingMore] = React.useState(false);
   const [pagenationParams, setPagenationParams] =
     React.useState<PAGENATION_PARAM_TYPE>(initialPagenationParam);
   const [loadResults, searchResults] = useLazyQuery(FETCH_SEARCH_RESULTS, {
     notifyOnNetworkStatusChange: true,
-    fetchPolicy: "network-only",
   });
   const [getQueryCount, totalQueryCount] = useLazyQuery(FTECH_SEARCH_COUNTS, {
     notifyOnNetworkStatusChange: true,
@@ -51,29 +49,17 @@ export const Layout = () => {
         },
       });
 
-      if (searchResults.data && searchResults.refetch) {
-        console.log("REFETCH");
-        await searchResults.refetch({
-          variables: {
-            search_query: query,
-            skip: pagenationParams.skip,
-            take: pagenationParams.take,
-          },
-        });
-      } else {
-        await loadResults({
-          variables: {
-            search_query: query,
-            skip: pagenationParams.skip,
-            take: pagenationParams.take,
-          },
-        });
-      }
+      await loadResults({
+        variables: {
+          search_query: query,
+          skip: pagenationParams.skip,
+          take: pagenationParams.take,
+        },
+      });
+
       return;
     }
   };
-
-  console.log(searchResults.data);
 
   React.useEffect(() => {
     (async () => {
@@ -161,8 +147,6 @@ export const Layout = () => {
             hasMore={hasMore}
             searchedQuery={searchQuery}
             searchResults={searchResults}
-            pagenationParams={pagenationParams}
-            isLoadingMore={isLoadingMore}
             setPagenationParams={setPagenationParams}
           />
         </div>

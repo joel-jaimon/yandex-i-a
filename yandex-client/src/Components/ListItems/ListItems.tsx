@@ -23,13 +23,11 @@ export const ListItems = ({
   hasMore,
   searchResults,
   searchedQuery,
-  pagenationParams,
   setPagenationParams,
-  isLoadingMore,
 }: any) => {
   const { theme } = React.useContext(StyleContext);
   const { called, loading, data, fetchMore } = searchResults;
-  const items: any[] = [...new Set(data?.searchAnime)];
+  const items: any[] = data?.searchAnime;
 
   const observer = React.useRef();
   //@ts-ignore
@@ -54,7 +52,6 @@ export const ListItems = ({
     },
     [loading, hasMore]
   );
-  console.log(hasMore);
 
   return (
     <React.Fragment>
@@ -109,7 +106,7 @@ export const ListItems = ({
             })
           : null}
       </div>
-      {loading || isLoadingMore ? (
+      {loading ? (
         <LinearProgress
           color="primary"
           style={{
