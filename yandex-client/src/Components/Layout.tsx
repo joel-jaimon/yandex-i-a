@@ -5,6 +5,7 @@ import { ITEM_TYPE, ListItems } from "./ListItems/ListItems";
 import styles from "./layout.module.scss";
 import { gql, useLazyQuery } from "@apollo/client";
 import Switch from "@material-ui/core/Switch";
+import { debounce } from "./Debounce";
 
 export interface PAGENATION_PARAM_TYPE {
   skip: number;
@@ -19,10 +20,12 @@ const initialPagenationParam = {
 export const Layout = () => {
   const { theme, setTheme } = React.useContext(StyleContext);
   const [searchQuery, setSearchQuery] = React.useState<null | string>();
+  const [isLoadingMore, setIsLoadingMore] = React.useState(false);
   const [pagenationParams, setPagenationParams] =
     React.useState<PAGENATION_PARAM_TYPE>(initialPagenationParam);
   const [loadResults, searchResults] = useLazyQuery(FETCH_SEARCH_RESULTS, {
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: "cache-and-network",
   });
   const [getQueryCount, totalQueryCount] = useLazyQuery(FTECH_SEARCH_COUNTS, {
     notifyOnNetworkStatusChange: true,
@@ -31,6 +34,7 @@ export const Layout = () => {
   const [hasMore, setHasMore] = React.useState(false);
 
   const handleInputs = async (query: string) => {
+    console.log(query);
     if (!query) {
       console.log("Please type an input to search.");
       return;
@@ -40,8 +44,9 @@ export const Layout = () => {
       console.log("Please enter a valid input!.");
       return;
     }
-    setSearchQuery(query);
-    setPagenationParams(initialPagenationParam);
+
+    await setSearchQuery(query);
+    await setPagenationParams(initialPagenationParam);
     if (query.length > 1) {
       await getQueryCount({
         variables: {
@@ -56,8 +61,6 @@ export const Layout = () => {
           take: pagenationParams.take,
         },
       });
-
-      return;
     }
   };
 
@@ -142,11 +145,12 @@ export const Layout = () => {
             boxShadow: `0px 0px 15px ${theme.theme3}`,
           }}
         >
-          <Search setSearchQuery={handleInputs} />
+          <Search setSearchQuery={debounce(handleInputs, 400)} />
           <ListItems
             hasMore={hasMore}
             searchedQuery={searchQuery}
             searchResults={searchResults}
+            isLoadingMore={isLoadingMore}
             setPagenationParams={setPagenationParams}
           />
         </div>
@@ -168,15 +172,10 @@ const FETCH_SEARCH_RESULTS = gql`
       id
       title
       type
-      episodes
       status
       start_airing
-      sources
       genres
       duration
-      rating
-      score
-      favorites
     }
   }
 `;

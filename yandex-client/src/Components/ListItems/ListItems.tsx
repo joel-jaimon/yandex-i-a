@@ -8,15 +8,10 @@ export interface ITEM_TYPE {
   id: number;
   title: string;
   type: string;
-  episodes: string;
   status: string;
   start_airing: string;
-  sources: string;
   genres: string;
   duration: string;
-  rating: number;
-  score: number;
-  favorites: number;
 }
 
 export const ListItems = ({
@@ -27,7 +22,19 @@ export const ListItems = ({
 }: any) => {
   const { theme } = React.useContext(StyleContext);
   const { called, loading, data, fetchMore } = searchResults;
-  const items: any[] = data?.searchAnime;
+  const items: any[] = [
+    ...new Set(
+      data?.searchAnime?.filter((item: ITEM_TYPE) => {
+        return (
+          item.genres.toLowerCase().includes(searchedQuery) ||
+          item.type.toLowerCase().includes(searchedQuery) ||
+          item.title.toLowerCase().includes(searchedQuery)
+        );
+      })
+    ),
+  ];
+
+  console.log(items, data?.searchAnime);
 
   const observer = React.useRef();
   //@ts-ignore

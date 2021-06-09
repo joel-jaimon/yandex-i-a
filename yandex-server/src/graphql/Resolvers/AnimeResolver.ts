@@ -49,7 +49,7 @@ export class AnimeResolver {
     return await Animes.count({
       where: [
         {
-          genres: ILike(`%${search_query} %`),
+          genres: ILike(`%${search_query}%`),
         },
         {
           title: ILike(`%${search_query}%`),

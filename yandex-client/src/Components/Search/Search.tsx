@@ -2,7 +2,7 @@ import styles from "./search.module.scss";
 import React from "react";
 import { StyleContext } from "../../context/StyleContext";
 
-export const Search = ({ setSearchQuery }: any) => {
+export function Search({ setSearchQuery }: any) {
   const { theme } = React.useContext(StyleContext);
   return (
     <div className={styles.SubSearchContainer}>
@@ -23,4 +23,4 @@ export const Search = ({ setSearchQuery }: any) => {
       />
     </div>
   );
-};
+}
