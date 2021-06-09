@@ -4,6 +4,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { StyleContextProvider } from "./context/StyleContext";
 
 const client = new ApolloClient({
+  //To be changed
   uri: "http://localhost:4000/graphql/",
   cache: new InMemoryCache({
     typePolicies: {

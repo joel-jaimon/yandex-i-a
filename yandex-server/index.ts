@@ -22,7 +22,10 @@ app.use(cookieParser());
   //add cors middleware
   app.use(
     cors({
-      origin: ["http://localhost:3000"],
+      origin:
+        process.env.NODE_ENV === "production"
+          ? [process.env.CLIENT_PROD_URL]
+          : [process.env.CLIENT_LOCAL_URL],
       credentials: true,
     })
   );
