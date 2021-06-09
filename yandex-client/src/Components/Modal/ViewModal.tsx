@@ -37,6 +37,7 @@ export const ViewModal = ({ open, setOpen, id, setViewId }: any) => {
         <div className={styles.mHeader}>
           {loading ? (
             <Skeleton
+              className={styles.mobHead}
               style={{
                 width: "200px",
                 height: "34px",
@@ -45,7 +46,7 @@ export const ViewModal = ({ open, setOpen, id, setViewId }: any) => {
           ) : (
             <h2>{modalData?.title}</h2>
           )}
-          <IconButton>
+          <IconButton className={styles.closeBtn}>
             <CloseIcon
               onClick={() => handleClose()}
               style={{ color: theme.theme1 }}

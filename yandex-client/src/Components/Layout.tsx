@@ -14,6 +14,11 @@ import {
   LIST_ITEM_TYPE,
   PAGENATION_PARAM_TYPE,
 } from "../types/customInterfaces";
+import whiteBk from "../Assets/white-back.jpg";
+import blackBk from "../Assets/dark-back.jpg";
+
+const white_background = whiteBk;
+const black_background = blackBk;
 
 const initialPagenationParam = {
   skip: 0,
@@ -108,7 +113,13 @@ export const Layout = () => {
   return (
     <div
       style={{
-        backgroundColor: theme.theme4,
+        background: `linear-gradient(180deg,rgba(0,0,0,0.3), ${
+          theme.type === "White" ? "transparent" : "rgba(0,0,0,0.8)"
+        }),url(${
+          theme.type === "White" ? white_background : black_background
+        })`,
+        backgroundSize: "cover",
+        backgroundPosition: "bottom",
       }}
       className={styles.layout}
     >
@@ -117,7 +128,7 @@ export const Layout = () => {
         <div
           className={styles.searchContainer}
           style={{
-            // border: `1px solid ${theme.theme2}`,
+            boxShadow: `0px 0px ${theme.type === "Dark" ? 200 : 0}px black`,
             backgroundColor: theme.theme3,
           }}
         >

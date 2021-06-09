@@ -17,6 +17,17 @@
   padding: 5px 20px 20px 20px;
   border-radius: 5px;
   min-height: 400px;
+  @media only screen and (max-width: 900px) {
+    width: 80%;
+  }
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+    padding: 5px 20px 20px 20px;
+    border-radius: 5px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
 }
 
 .mHeader {
@@ -26,13 +37,26 @@
   align-items: center;
   margin-bottom: 20px;
   border-bottom: 1px solid gray;
+  @media only screen and (max-width: 700px) {
+    align-items: flex-start;
+    .closeBtn {
+      margin-top: 15px;
+      margin-right: -15px;
+    }
+  }
 }
 
 .mMain {
   display: flex;
+  @media only screen and (max-width: 700px) {
+    flex-direction: column;
+    font-size: 18px;
+  }
 }
 
 .bullets {
+  display: flex;
+  flex-wrap: wrap;
   span {
     padding: 4px;
     margin-right: 5px;
@@ -40,6 +64,17 @@
     border-radius: 2px;
     font-size: 12px;
     font-weight: 700;
+  }
+  @media only screen and (max-width: 700px) {
+    span {
+      padding: 4px;
+      margin-right: 10px;
+      height: 20px;
+      margin-bottom: 10px;
+      border-radius: 3px;
+      font-size: 14px;
+      font-weight: 700;
+    }
   }
 }
 
@@ -50,14 +85,25 @@
     display: flex;
     small {
       padding: 2px 5px 2px 5px;
-      margin-right: 5px;
+      margin-right: 10px;
       height: 20px;
-      border-radius: 2px;
+      border-radius: 3px;
       font-size: 12px;
       font-weight: 700;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  @media only screen and (max-width: 700px) {
+    width: 100%;
+    padding-right: 20px;
+    .info {
+      display: flex;
+      small {
+        font-size: 16px;
+      }
     }
   }
 }
@@ -68,5 +114,11 @@
   }
   span {
     font-weight: 700;
+  }
+}
+
+.mobHead {
+  @media only screen and (max-width: 700px) {
+    margin-top: 20px;
   }
 }

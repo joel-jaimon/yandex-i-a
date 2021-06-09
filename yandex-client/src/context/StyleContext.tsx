@@ -6,7 +6,7 @@ export const themes = {
     type: "Dark",
     theme1: "white",
     theme2: "#544fbb",
-    theme3: "rgb(25,25,25)",
+    theme3: "rgb(30,30,30)",
     theme4: "black",
     theme5: "#423bc8",
   },
