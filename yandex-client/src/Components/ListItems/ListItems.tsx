@@ -3,6 +3,7 @@ import React from "react";
 import { StyleContext } from "../../context/StyleContext";
 import { LinearProgress } from "@material-ui/core";
 import { PAGENATION_PARAM_TYPE } from "../Layout";
+import { ViewModal } from "../Modal/ViewModal";
 
 export interface ITEM_TYPE {
   id: number;
@@ -22,6 +23,9 @@ export const ListItems = ({
 }: any) => {
   const { theme } = React.useContext(StyleContext);
   const { loading, data } = searchResults;
+  const [viewModal, setViewModal] = React.useState(false);
+  const [viewId, setViewId] = React.useState<null | number>(null);
+
   const items: any[] = [
     ...new Set(
       data?.searchAnime?.filter((item: ITEM_TYPE) => {
@@ -62,10 +66,22 @@ export const ListItems = ({
   return (
     <React.Fragment>
       <div className={styles.resultContainer}>
+        {viewModal ? (
+          <ViewModal
+            setViewId={setViewId}
+            setOpen={setViewModal}
+            open={viewModal}
+            id={viewId}
+          />
+        ) : null}
         {items && searchedQuery?.length > 1
           ? items.map((res: ITEM_TYPE, index: number) => {
               return (
                 <div
+                  onClick={() => {
+                    setViewId(res.id);
+                    setViewModal(true);
+                  }}
                   ref={items.length === index + 1 ? lastItemCallback : null}
                   key={res.id}
                   className={`${styles.listItems} ${
