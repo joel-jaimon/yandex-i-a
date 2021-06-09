@@ -34,7 +34,6 @@ export const Layout = () => {
   const [hasMore, setHasMore] = React.useState(false);
 
   const handleInputs = async (query: string) => {
-    console.log(query);
     if (!query) {
       console.log("Please type an input to search.");
       return;
@@ -66,11 +65,12 @@ export const Layout = () => {
 
   React.useEffect(() => {
     (async () => {
+      const { fetchMore } = await searchResults;
       try {
         if (pagenationParams.skip === 0) {
         } else {
           //@ts-ignore
-          const _fetch = await searchResults.fetchMore({
+          const _fetch = await fetchMore({
             variables: {
               skip: pagenationParams.skip,
               take: pagenationParams.take,

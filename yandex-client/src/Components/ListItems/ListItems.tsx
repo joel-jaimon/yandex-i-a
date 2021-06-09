@@ -21,7 +21,7 @@ export const ListItems = ({
   setPagenationParams,
 }: any) => {
   const { theme } = React.useContext(StyleContext);
-  const { called, loading, data, fetchMore } = searchResults;
+  const { loading, data } = searchResults;
   const items: any[] = [
     ...new Set(
       data?.searchAnime?.filter((item: ITEM_TYPE) => {
@@ -33,8 +33,6 @@ export const ListItems = ({
       })
     ),
   ];
-
-  console.log(items, data?.searchAnime);
 
   const observer = React.useRef();
   //@ts-ignore

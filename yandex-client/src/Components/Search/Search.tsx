@@ -17,7 +17,7 @@ export function Search({ setSearchQuery }: any) {
       </svg>
 
       <input
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => setSearchQuery(e.target.value.trim())}
         className={styles.input}
         placeholder="Search for anything..."
       />
