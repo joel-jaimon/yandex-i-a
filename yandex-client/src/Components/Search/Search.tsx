@@ -19,6 +19,9 @@ export function Search({ setSearchQuery }: any) {
       <input
         onChange={(e) => setSearchQuery(e.target.value.trim())}
         className={styles.input}
+        style={{
+          color: theme.theme1,
+        }}
         placeholder="Search for anything..."
       />
     </div>

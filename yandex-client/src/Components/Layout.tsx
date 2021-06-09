@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleContext } from "../context/StyleContext";
+import { StyleContext, themes } from "../context/StyleContext";
 import { Search } from "./Search/Search";
 import { ITEM_TYPE, ListItems } from "./ListItems/ListItems";
 import styles from "./layout.module.scss";
@@ -114,7 +114,8 @@ export const Layout = () => {
         <div
           className={styles.searchContainer}
           style={{
-            boxShadow: `0px 0px 15px ${theme.theme3}`,
+            // border: `1px solid ${theme.theme2}`,
+            backgroundColor: theme.theme3,
           }}
         >
           <Search setSearchQuery={debounce(handleInputs, 400)} />

@@ -68,10 +68,18 @@ export const ListItems = ({
                 <div
                   ref={items.length === index + 1 ? lastItemCallback : null}
                   key={res.id}
-                  className={styles.listItems}
+                  className={`${styles.listItems} ${
+                    theme.type === "Dark"
+                      ? styles.listItems_hv_dark
+                      : styles.listItems_hv_white
+                  }`}
                 >
                   <div>
-                    <strong>
+                    <strong
+                      style={{
+                        color: theme.theme1,
+                      }}
+                    >
                       <p>
                         {res.title.slice(0, 50)}
                         {res.title[50] ? "..." : ""}
@@ -80,14 +88,16 @@ export const ListItems = ({
                     <div className={styles.listSubInfo}>
                       <small
                         style={{
-                          backgroundColor: theme.theme4,
+                          backgroundColor: theme.theme5,
+                          color: theme.theme1,
                         }}
                       >
                         {res.duration.split(".")[0]}
                       </small>
                       <small
                         style={{
-                          backgroundColor: theme.theme4,
+                          backgroundColor: theme.theme5,
+                          color: theme.theme1,
                         }}
                       >
                         {res.start_airing}
@@ -101,7 +111,11 @@ export const ListItems = ({
                     }}
                     className={styles.bullets}
                   >
-                    <small>
+                    <small
+                      style={{
+                        color: theme.theme1,
+                      }}
+                    >
                       {res.status === "Finished Airing"
                         ? "Completed"
                         : "Ongoing"}

@@ -4,16 +4,18 @@ export const themes = {
   dark: {
     type: "Dark",
     theme1: "white",
-    theme2: "rgb(200,200,200)",
-    theme3: "gray",
-    theme4: "rgb(21,21,21)",
+    theme2: "#544fbb",
+    theme3: "rgb(21,21,21)",
+    theme4: "black",
+    theme5: "#423bc8",
   },
   white: {
     type: "White",
     theme1: "#0C0D14",
     theme2: "#4d4f59",
-    theme3: "#BEC1CE",
+    theme3: "white",
     theme4: "#CFD1DD",
+    theme5: "#f1f1fb",
   },
 };
 
@@ -23,6 +25,7 @@ interface THEME {
   theme2: string;
   theme3: string;
   theme4: string;
+  theme5: string;
 }
 
 interface STYLE_TYPE {
