@@ -14,7 +14,7 @@ export function Search({ setSearchQuery }: any) {
         }}
       />
       <input
-        onChange={(e) => setSearchQuery(e.target.value.trim())}
+        onChange={(e) => setSearchQuery(e.target.value.toLowerCase().trim())}
         className={styles.input}
         style={{
           color: theme.theme1,
