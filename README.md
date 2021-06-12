@@ -2,6 +2,8 @@
 
 This is a search based website project. Its built using PERN (PostgreSQL, Express, React, Node JS) Stack.
 
+![](Demo.gif)
+
 **Functionality as follow:**
 
 - ☑️ Scroll based query fetching, .
